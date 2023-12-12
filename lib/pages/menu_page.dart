@@ -5,6 +5,7 @@ import 'package:sushi_app/components/food_tile.dart';
 import 'package:sushi_app/models/food.dart';
 
 import '../theme/colors.dart';
+import 'food_details_page.dart';
 
 class MenuPage extends StatefulWidget {
   const MenuPage({super.key});
@@ -36,6 +37,16 @@ class _MenuPageState extends State<MenuPage> {
         price: "17.00",
         rating: "4.9")
   ];
+
+  void navigateToFoodDetails(int index) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => FoodDetailsPage(
+            food: foodMenu[index],
+          ),
+        ));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -123,11 +134,15 @@ class _MenuPageState extends State<MenuPage> {
           ),
 
           Expanded(
-              child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: foodMenu.length,
-                  itemBuilder: (context, index) =>
-                      FoodTile(food: foodMenu[index]))),
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: foodMenu.length,
+              itemBuilder: (context, index) => FoodTile(
+                food: foodMenu[index],
+                onTap: () => navigateToFoodDetails(index),
+              ),
+            ),
+          ),
           // popular food
 
           const SizedBox(
