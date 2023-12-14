@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:sushi_app/components/button.dart';
 import 'package:sushi_app/components/food_tile.dart';
 import 'package:sushi_app/models/food.dart';
+import 'package:sushi_app/models/shop.dart';
 
 import '../theme/colors.dart';
 import 'food_details_page.dart';
@@ -39,6 +41,10 @@ class _MenuPageState extends State<MenuPage> {
   ];
 
   void navigateToFoodDetails(int index) {
+    // get the shop and it's menu
+    final shop = context.read<Shop>();
+    final foodMenu = shop.foodMenu;
+
     Navigator.push(
         context,
         MaterialPageRoute(
@@ -50,19 +56,32 @@ class _MenuPageState extends State<MenuPage> {
 
   @override
   Widget build(BuildContext context) {
+    // get the shop and it's menu
+    final shop = context.read<Shop>();
+    final foodMenu = shop.foodMenu;
+
     return Scaffold(
       backgroundColor: Colors.grey[300],
       appBar: AppBar(
         backgroundColor: Colors.transparent,
+        foregroundColor: Colors.grey[900],
         elevation: 0,
-        leading: Icon(
+        leading: const Icon(
           Icons.menu,
-          color: Colors.grey[900],
         ),
         title: Text(
           'Seoul',
           style: TextStyle(color: Colors.grey[900]),
         ),
+        actions: [
+          // cart button
+          IconButton(
+            onPressed: () {
+              Navigator.pushNamed(context, "/cartpage");
+            },
+            icon: const Icon(Icons.shopping_cart),
+          )
+        ],
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -107,10 +126,10 @@ class _MenuPageState extends State<MenuPage> {
                 decoration: InputDecoration(
                     focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(20),
-                        borderSide: BorderSide(color: Colors.white)),
+                        borderSide: const BorderSide(color: Colors.white)),
                     enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(20),
-                        borderSide: BorderSide(color: Colors.white)),
+                        borderSide: const BorderSide(color: Colors.white)),
                     hintText: "Search here..")),
           ),
 

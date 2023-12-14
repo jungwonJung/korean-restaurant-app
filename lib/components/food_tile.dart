@@ -48,7 +48,7 @@ class FoodTile extends StatelessWidget {
                       ),
                       Text(
                         food.rating,
-                        style: TextStyle(color: Colors.grey),
+                        style: const TextStyle(color: Colors.grey),
                       ),
                     ],
                   )
